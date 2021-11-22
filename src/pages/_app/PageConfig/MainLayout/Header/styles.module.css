@@ -1,0 +1,15 @@
+.header {
+  min-height: 72px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  background-color: var(--black);
+}
+
+.logo {
+  width: 48px;
+}
+
+.menu {
+  margin-left: auto;
+}

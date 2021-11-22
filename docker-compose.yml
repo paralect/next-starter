@@ -1,0 +1,16 @@
+version: '3.6'
+services:
+  web:
+    build:
+      context: "./"
+      dockerfile: Dockerfile.dev
+    volumes:
+      - "./src:/app/src"
+    networks:
+      - ship
+    ports:
+      - "3002:3002"
+
+networks:
+  ship:
+    name: ship_network

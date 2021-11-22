@@ -1,0 +1,12 @@
+.wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  width: 100%;
+  height: calc(100% - 118px);
+  padding: 0 64px;
+  background-color: var(--gray-light);
+}
