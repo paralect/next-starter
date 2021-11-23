@@ -1,5 +1,3 @@
-import MyHome from 'pages/home';
-
-const Home = (props) => <MyHome {...props} />;
+import Home from 'pages/home';
 
 export default Home;

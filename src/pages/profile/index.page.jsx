@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 
 import useHandleError from 'hooks/useHandleError';
-import * as userApi from 'resources/user/user.api';
+import { updateProfile } from 'resources/user/user.api';
 import { toastActions } from 'resources/toast/toast.slice';
 import { userSelectors } from 'resources/user/user.slice';
 
@@ -35,13 +35,13 @@ const Profile = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = useCallback(async (data) => {
+  const onSubmit = useCallback(async ({ password }) => {
     try {
       setLoading(true);
 
-      // await userApi.updatePreferences(data);
+      await updateProfile({ password });
 
-      dispatch(toastActions.success('Your preferences have been successfully updated.'));
+      dispatch(toastActions.success('Your password have been successfully updated.'));
     } catch (e) {
       handleError(e, setError);
     } finally {
@@ -64,6 +64,7 @@ const Profile = () => {
             defaultValue={email}
             control={control}
             error={errors.email}
+            disabled
           />
           <Input
             name="password"

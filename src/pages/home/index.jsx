@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import styles from './styles.module.css';
 
@@ -29,7 +29,7 @@ const meetings = [
   },
 ];
 
-const MyHome = () => (
+const Home = () => (
   <>
     <h2 className={styles.title}>Meetings</h2>
 
@@ -63,4 +63,4 @@ const MyHome = () => (
   </>
 );
 
-export default React.memo(MyHome);
+export default memo(Home);

@@ -11,6 +11,8 @@ import { userActions, userSelectors } from 'resources/user/user.slice';
 import Input from 'components/Input';
 import Button from 'components/Button';
 import Link from 'components/Link';
+import MemoCard from 'components/MemoCard';
+
 import { useRouter } from 'next/router';
 
 import { useForm } from 'react-hook-form';
@@ -105,6 +107,7 @@ const SignIn = () => {
             </Link>
           </div>
         </form>
+        <MemoCard items={errors.credentials} />
       </div>
     </>
   );

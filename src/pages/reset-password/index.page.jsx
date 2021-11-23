@@ -12,7 +12,6 @@ import useHandleError from 'hooks/useHandleError';
 
 import Input from 'components/Input';
 import Button from 'components/Button';
-import Link from 'components/Link';
 
 import styles from './styles.module.css';
 
@@ -33,24 +32,41 @@ const ResetPassword = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [isSubmitted, setSubmitted] = useState(false);
 
   const onSubmit = useCallback(async ({ password }) => {
     try {
       setLoading(true);
 
-      // await resetPassword({ password, token });
+      await resetPassword({ password, token });
+
+      setSubmitted(true);
     } catch (e) {
       handleError(e);
     } finally {
       setLoading(false);
     }
-  }, [handleError]);
+  }, [handleError, token]);
 
   if (!token) {
     return (
       <div className={styles.invalidTokenContainer}>
         <h2>Invalid token</h2>
         <p>Sorry, your token is invalid.</p>
+      </div>
+    );
+  }
+
+  if (isSubmitted) {
+    return (
+      <div className={styles.container}>
+        <h2>Password has been updated</h2>
+        <p className={styles.subheading}>
+          Your password has been updated successfully. You can now use your new password to sign in.
+        </p>
+        <Button onClick={() => router.push(path.signIn)}>
+          Back to Sign In
+        </Button>
       </div>
     );
   }
@@ -64,6 +80,7 @@ const ResetPassword = () => {
           name="password"
           type="password"
           label="Password"
+          placeholder="Your new password"
           control={control}
           error={errors.password}
         />
@@ -75,16 +92,6 @@ const ResetPassword = () => {
           Save New Password
         </Button>
       </form>
-      <div className={styles.description}>
-        Have an account?
-        <Link
-          type="router"
-          href={path.signIn}
-          className={styles.signInLink}
-        >
-          Sign in
-        </Link>
-      </div>
     </div>
   );
 };

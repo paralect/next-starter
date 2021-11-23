@@ -12,7 +12,7 @@ import PageConfig from './PageConfig';
 
 import 'styles/globals.css';
 
-const MyApp = ({ Component, pageProps }) => {
+const App = ({ Component, pageProps }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -46,9 +46,10 @@ const MyApp = ({ Component, pageProps }) => {
     </>
   );
 };
-MyApp.propTypes = {
+
+App.propTypes = {
   Component: PropTypes.elementType.isRequired,
   pageProps: PropTypes.shape({}).isRequired,
 };
 
-export default MyApp;
+export default App;

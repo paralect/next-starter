@@ -2,6 +2,8 @@ import React, { memo, useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import * as yup from 'yup';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 import { path } from 'pages/routes';
 
@@ -12,7 +14,6 @@ import Button from 'components/Button';
 import useHandleError from 'hooks/useHandleError';
 import Link from 'components/Link';
 
-import Head from 'next/head';
 import styles from './styles.module.css';
 
 const schema = yup.object().shape({
@@ -20,11 +21,11 @@ const schema = yup.object().shape({
 });
 
 const ForgotPassword = () => {
+  const router = useRouter();
   const handleError = useHandleError();
 
-  const [values, setValues] = React.useState({});
+  const [email, setEmail] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [submitted, setSubmitted] = React.useState(false);
 
   const {
     handleSubmit, formState: { errors }, control,
@@ -34,19 +35,36 @@ const ForgotPassword = () => {
 
   const onSubmit = useCallback(async (data) => {
     try {
-      setValues(data);
       setLoading(true);
 
       await forgotPassword(data);
 
-      setSubmitted(true);
+      setEmail(data.email);
     } catch (e) {
       handleError(e);
     } finally {
       setLoading(false);
     }
   }, [handleError]);
-  // submitted case
+
+  if (email) {
+    return (
+      <div className={styles.container}>
+        <h2>Reset link has been sent</h2>
+        <p className={styles.subheading}>
+          A link to reset your password has just been sent to
+          {' '}
+          <b>{email}</b>
+          . Please check your email inbox and follow the
+          directions to reset your password.
+        </p>
+        <Button onClick={() => router.push(path.signIn)}>
+          Back to Sign In
+        </Button>
+      </div>
+    );
+  }
+
   return (
     <>
       <Head>
@@ -54,7 +72,10 @@ const ForgotPassword = () => {
       </Head>
       <div className={styles.container}>
         <h2>Forgot Password</h2>
-        <p className={styles.subheading}>We’ll send a reset link to your email.</p>
+        <p className={styles.subheading}>
+          Please enter your email and we&apos;ll send
+          a link to reset your password.
+        </p>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input
             name="email"
