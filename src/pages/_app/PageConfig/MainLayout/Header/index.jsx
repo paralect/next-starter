@@ -1,4 +1,3 @@
-import React from 'react';
 import Logo from 'public/images/logo.svg';
 
 import { path } from 'pages/routes';

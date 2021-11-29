@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import * as yup from 'yup';
@@ -49,19 +49,24 @@ const ForgotPassword = () => {
 
   if (email) {
     return (
-      <div className={styles.container}>
-        <h2>Reset link has been sent</h2>
-        <p className={styles.subheading}>
-          A link to reset your password has just been sent to
-          {' '}
-          <b>{email}</b>
-          . Please check your email inbox and follow the
-          directions to reset your password.
-        </p>
-        <Button onClick={() => router.push(path.signIn)}>
-          Back to Sign In
-        </Button>
-      </div>
+      <>
+        <Head>
+          <title>Forgot password</title>
+        </Head>
+        <div className={styles.container}>
+          <h2>Reset link has been sent</h2>
+          <p className={styles.subheading}>
+            A link to reset your password has just been sent to
+            {' '}
+            <b>{email}</b>
+            . Please check your email inbox and follow the
+            directions to reset your password.
+          </p>
+          <Button onClick={() => router.push(path.signIn)}>
+            Back to Sign In
+          </Button>
+        </div>
+      </>
     );
   }
 
@@ -108,4 +113,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default memo(ForgotPassword);
+export default ForgotPassword;

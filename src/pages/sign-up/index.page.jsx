@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import React, { memo, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
@@ -65,24 +65,29 @@ const SignUp = () => {
 
   if (registered) {
     return (
-      <div className={styles.registeredContainer}>
-        <h2>Thanks!</h2>
-        <div className={styles.registeredDescription}>
-          Please follow the instructions from the email to complete a sign up process.
-          We sent an email with a confirmation link to
-          {' '}
-          <b>{values.email}</b>
+      <>
+        <Head>
+          <title>Sign up</title>
+        </Head>
+        <div className={styles.registeredContainer}>
+          <h2>Thanks!</h2>
+          <div className={styles.registeredDescription}>
+            Please follow the instructions from the email to complete a sign up process.
+            We sent an email with a confirmation link to
+            {' '}
+            <b>{values.email}</b>
+          </div>
+          {signupToken && (
+            <div>
+              You look like a cool developer.
+              {' '}
+              <Link size="l" href={`${config.apiUrl}/account/verify-email?token=${signupToken}`}>
+                Verify email
+              </Link>
+            </div>
+          )}
         </div>
-        {signupToken && (
-        <div>
-          You look like a cool developer.
-          {' '}
-          <Link size="l" href={`${config.apiUrl}/account/verify-email?token=${signupToken}`}>
-            Verify email
-          </Link>
-        </div>
-        )}
-      </div>
+      </>
     );
   }
 
@@ -151,4 +156,4 @@ const SignUp = () => {
   );
 };
 
-export default memo(SignUp);
+export default SignUp;

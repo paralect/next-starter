@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
@@ -36,15 +36,20 @@ const ForgotPassword = () => {
 
   if (isSent) {
     return (
-      <div className={styles.container}>
-        <h2>Reset link has been sent</h2>
-        <div className={styles.description}>
-          Reset link sent successfully
+      <>
+        <Head>
+          <title>Password reset link expired</title>
+        </Head>
+        <div className={styles.container}>
+          <h2>Reset link has been sent</h2>
+          <div className={styles.description}>
+            Reset link sent successfully
+          </div>
+          <Button onClick={() => router.push(path.signIn)}>
+            Back to Sign In
+          </Button>
         </div>
-        <Button onClick={() => router.push(path.signIn)}>
-          Back to Sign In
-        </Button>
-      </div>
+      </>
     );
   }
 
@@ -72,4 +77,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default memo(ForgotPassword);
+export default ForgotPassword;

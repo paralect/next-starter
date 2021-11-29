@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
@@ -30,7 +30,7 @@ const App = ({ Component, pageProps }) => {
   }, []);
 
   if (loading) return null;
-  // @todo: check how loading user data affects on First Contentful Paint
+  // @todo: check how first loading of user data affects on First Contentful Paint
 
   return (
     <>

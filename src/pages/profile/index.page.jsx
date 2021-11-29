@@ -1,13 +1,13 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import * as yup from 'yup';
-import React, { memo, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import Head from 'next/head';
 
 import useHandleError from 'hooks/useHandleError';
+import useToast from 'hooks/useToast';
 import { updateProfile } from 'resources/user/user.api';
-import { toastActions } from 'resources/toast/toast.slice';
 import { userSelectors } from 'resources/user/user.slice';
 
 import Input from 'components/Input';
@@ -23,7 +23,7 @@ const schema = yup.object().shape({
 
 const Profile = () => {
   const handleError = useHandleError();
-  const dispatch = useDispatch();
+  const { toastSuccess } = useToast();
 
   const [loading, setLoading] = useState(false);
 
@@ -41,49 +41,54 @@ const Profile = () => {
 
       await updateProfile({ password });
 
-      dispatch(toastActions.success('Your password have been successfully updated.'));
+      toastSuccess('Your password have been successfully updated.');
     } catch (e) {
       handleError(e, setError);
     } finally {
       setLoading(false);
     }
-  }, [handleError, setError, dispatch]);
+  }, [toastSuccess, handleError, setError]);
 
   return (
-    <div className={styles.uploadContainer}>
-      <span>
-        <h1 className={styles.heading}>Profile</h1>
-        <PhotoUpload />
-        <form
-          className={styles.form}
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <Input
-            name="email"
-            label="Email Address"
-            defaultValue={email}
-            control={control}
-            error={errors.email}
-            disabled
-          />
-          <Input
-            name="password"
-            type="password"
-            label="Password"
-            placeholder="Your password"
-            control={control}
-            error={errors.password}
-          />
-          <Button
-            htmlType="submit"
-            loading={loading}
+    <>
+      <Head>
+        <title>Profile</title>
+      </Head>
+      <div className={styles.uploadContainer}>
+        <span>
+          <h1 className={styles.heading}>Profile</h1>
+          <PhotoUpload />
+          <form
+            className={styles.form}
+            onSubmit={handleSubmit(onSubmit)}
           >
-            Update Profile
-          </Button>
-        </form>
-      </span>
-    </div>
+            <Input
+              name="email"
+              label="Email Address"
+              defaultValue={email}
+              control={control}
+              error={errors.email}
+              disabled
+            />
+            <Input
+              name="password"
+              type="password"
+              label="Password"
+              placeholder="Your password"
+              control={control}
+              error={errors.password}
+            />
+            <Button
+              htmlType="submit"
+              loading={loading}
+            >
+              Update Profile
+            </Button>
+          </form>
+        </span>
+      </div>
+    </>
   );
 };
 
-export default memo(Profile);
+export default Profile;

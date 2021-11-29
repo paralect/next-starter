@@ -1,8 +1,9 @@
-import React, { memo, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import * as yup from 'yup';
+import Head from 'next/head';
 
 import { path } from 'pages/routes';
 
@@ -59,41 +60,52 @@ const ResetPassword = () => {
 
   if (isSubmitted) {
     return (
-      <div className={styles.container}>
-        <h2>Password has been updated</h2>
-        <p className={styles.subheading}>
-          Your password has been updated successfully. You can now use your new password to sign in.
-        </p>
-        <Button onClick={() => router.push(path.signIn)}>
-          Back to Sign In
-        </Button>
-      </div>
+      <>
+        <Head>
+          <title>Reset Password</title>
+        </Head>
+        <div className={styles.container}>
+          <h2>Password has been updated</h2>
+          <p className={styles.subheading}>
+            Your password has been updated successfully.
+            You can now use your new password to sign in.
+          </p>
+          <Button onClick={() => router.push(path.signIn)}>
+            Back to Sign In
+          </Button>
+        </div>
+      </>
     );
   }
 
   return (
-    <div className={styles.container}>
-      <h2>Reset Password</h2>
-      <p className={styles.subheading}>Please choose your new password</p>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          name="password"
-          type="password"
-          label="Password"
-          placeholder="Your new password"
-          control={control}
-          error={errors.password}
-        />
-        <Button
-          htmlType="submit"
-          loading={loading}
-          className={styles.button}
-        >
-          Save New Password
-        </Button>
-      </form>
-    </div>
+    <>
+      <Head>
+        <title>Reset Password</title>
+      </Head>
+      <div className={styles.container}>
+        <h2>Reset Password</h2>
+        <p className={styles.subheading}>Please choose your new password</p>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            name="password"
+            type="password"
+            label="Password"
+            placeholder="Your new password"
+            control={control}
+            error={errors.password}
+          />
+          <Button
+            htmlType="submit"
+            loading={loading}
+            className={styles.button}
+          >
+            Save New Password
+          </Button>
+        </form>
+      </div>
+    </>
   );
 };
 
-export default memo(ResetPassword);
+export default ResetPassword;

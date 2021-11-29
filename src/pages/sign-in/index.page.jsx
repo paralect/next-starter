@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import React, { memo, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Head from 'next/head';
 
@@ -113,4 +113,4 @@ const SignIn = () => {
   );
 };
 
-export default memo(SignIn);
+export default SignIn;
