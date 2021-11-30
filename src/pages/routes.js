@@ -17,6 +17,7 @@ export const path = {
   signUp: '/sign-up',
   forgotPassword: '/forgot-password',
   resetPassword: '/reset-password',
+  expirePassword: '/expire-password',
   profile: '/profile',
 };
 
@@ -48,6 +49,11 @@ export const configuration = {
   },
   resetPassword: {
     path: path.resetPassword,
+    scope: scope.PUBLIC,
+    layout: layout.UNAUTHORIZED,
+  },
+  expirePassword: {
+    path: path.expirePassword,
     scope: scope.PUBLIC,
     layout: layout.UNAUTHORIZED,
   },

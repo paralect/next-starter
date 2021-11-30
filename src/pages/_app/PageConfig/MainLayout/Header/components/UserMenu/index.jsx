@@ -1,5 +1,5 @@
-import React, {
-  memo, useCallback, useEffect, useRef, useState,
+import {
+  useCallback, useEffect, useRef, useState,
 } from 'react';
 import cn from 'classnames';
 import { useRouter } from 'next/router';
@@ -82,4 +82,4 @@ const UserMenu = () => {
   );
 };
 
-export default memo(UserMenu);
+export default UserMenu;

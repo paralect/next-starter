@@ -1,5 +1,4 @@
-import React from 'react';
-
+import Head from 'next/head';
 import styles from './styles.module.css';
 
 const meetings = [
@@ -29,10 +28,12 @@ const meetings = [
   },
 ];
 
-const MyHome = () => (
+const Home = () => (
   <>
+    <Head>
+      <title>Home</title>
+    </Head>
     <h2 className={styles.title}>Meetings</h2>
-
     <div>
       {meetings.map((meeting) => (
         <div
@@ -63,4 +64,4 @@ const MyHome = () => (
   </>
 );
 
-export default React.memo(MyHome);
+export default Home;

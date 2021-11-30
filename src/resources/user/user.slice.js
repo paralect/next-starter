@@ -15,19 +15,8 @@ const userSlice = createSlice({
 
 const { setUser, removeUser } = userSlice.actions;
 
-const signUp = ({
-  firstName,
-  lastName,
-  email,
-  password,
-}) => async () => {
-  const { signupToken } = await api.signUp({
-    firstName,
-    lastName,
-    email,
-    password,
-  });
-
+const signUp = (data) => async () => {
+  const { signupToken } = await api.signUp(data);
   return { signupToken };
 };
 

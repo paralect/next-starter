@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -10,25 +10,47 @@ const types = {
   error: 'error',
 };
 
-const MemoCard = ({ title, items, type }) => (
-  <div className={cn(styles.memoCard, styles[type])}>
-    {title}
-    <ul>
-      {items.map((item) => (
-        <li key={item.title}>{item}</li>
-      ))}
-    </ul>
-  </div>
-);
+const MemoCard = ({ title, items, type }) => {
+  if (!items) return null;
+
+  if (!Array.isArray(items)) {
+    return (
+      <div className={cn(styles.memoCard, styles[type])}>
+        {title}
+        {items.message}
+      </div>
+    );
+  }
+
+  const data = items?.filter((e) => e !== undefined);
+
+  if (!data.length) return null;
+
+  return (
+    <div className={cn(styles.memoCard, styles[type])}>
+      {title}
+      <ul>
+        {data.map((item) => (
+          <li key={item.message}>{item.message}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 MemoCard.propTypes = {
-  title: PropTypes.string.isRequired,
-  items: PropTypes.arrayOf(PropTypes.string).isRequired,
+  title: PropTypes.string,
+  items: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.object,
+  ]),
   type: PropTypes.oneOf(Object.values(types)),
 };
 
 MemoCard.defaultProps = {
-  type: 'info',
+  title: null,
+  items: [],
+  type: 'error',
 };
 
-export default React.memo(MemoCard);
+export default memo(MemoCard);

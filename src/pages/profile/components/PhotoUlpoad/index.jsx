@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
-import * as userApi from 'resources/user/user.api';
-import { userSelectors, userActions } from 'resources/user/user.slice';
+import { uploadProfilePhoto, removeProfilePhoto } from 'resources/user/user.api';
+import { userSelectors } from 'resources/user/user.slice';
 
 import useHandleError from 'hooks/useHandleError';
 
@@ -17,7 +17,6 @@ import styles from './styles.module.css';
 const PhotoUpload = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const handleError = useHandleError();
-  const dispatch = useDispatch();
 
   const user = useSelector(userSelectors.selectUser);
 
@@ -42,11 +41,11 @@ const PhotoUpload = () => {
     try {
       setErrorMessage(null);
 
-      if (isFileFormatCorrect(imageFile) && isFileSizeCorrect(imageFile)) {
+      if (isFileFormatCorrect(imageFile) && isFileSizeCorrect(imageFile) && imageFile) {
         const body = new FormData();
         body.append('file', imageFile, imageFile.name);
 
-        // await dispatch(userActions.uploadPhoto(body));
+        await uploadProfilePhoto(body);
       }
     } catch (err) {
       handleError(err);
@@ -55,8 +54,8 @@ const PhotoUpload = () => {
 
   const handleClick = useCallback(async () => {
     try {
-      setErrorMessage('');
-      // await userApi.removePhoto();
+      setErrorMessage(null);
+      await removeProfilePhoto();
     } catch (e) {
       handleError(e);
     }

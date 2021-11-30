@@ -1,5 +1,3 @@
-import MyDocument from 'pages/_document';
-
-const Document = (props) => <MyDocument {...props} />;
+import Document from 'pages/_document';
 
 export default Document;

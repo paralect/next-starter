@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
@@ -12,7 +12,7 @@ import PageConfig from './PageConfig';
 
 import 'styles/globals.css';
 
-const MyApp = ({ Component, pageProps }) => {
+const App = ({ Component, pageProps }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const MyApp = ({ Component, pageProps }) => {
   }, []);
 
   if (loading) return null;
-  // @todo: check how loading user data affects on First Contentful Paint
+  // @todo: check how first loading of user data affects on First Contentful Paint
 
   return (
     <>
@@ -46,9 +46,10 @@ const MyApp = ({ Component, pageProps }) => {
     </>
   );
 };
-MyApp.propTypes = {
+
+App.propTypes = {
   Component: PropTypes.elementType.isRequired,
   pageProps: PropTypes.shape({}).isRequired,
 };
 
-export default MyApp;
+export default App;
