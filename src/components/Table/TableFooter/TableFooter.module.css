@@ -1,44 +1,69 @@
-.tableFooter {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.paginationContainer {
   width: 100%;
-  min-height: 48px;
   padding: 0 24px;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: normal;
+  height: 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 14px;
-  line-height: 17px;
-  color: var(--black);
+  transition: all 0.2s;
 }
 
-.controls {
-  position: relative;
+.pagination {
+  margin: 0;
+  padding: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  min-width: 190px;
+  font-weight: 500;
+  list-style-type: none;
 
-  >* {
-    width: 36px;
-    height: 36px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  &.withStroke {
+    border-radius: 6px;
+    border: 1px solid var(--gray);
+
+    .page,
+    .break,
+    .prev {
+      border-right: 1px solid var(--gray);
+    }
   }
 }
 
-.pageNumber {
-  all: unset;
-  text-align: center;
+.page,
+.break,
+.next,
+.prev {
+  display: flex;
+  align-items: center;
+  user-select: none;
+  cursor: pointer;
+}
+
+.page a,
+.break a,
+.next,
+.prev {
   width: 36px;
   height: 36px;
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  &.current {
-    font-weight: 600;
-  }
+.activePage {
+  outline: none;
+  font-weight: 700;
+}
+
+.disabled {
+  pointer-events: none;
+}
+
+.arrow {
+  color: var(--gray-dark);
+  transition: all 0.2s ease-in-out;
+}
+
+.arrow:hover {
+  color: var(--black);
 }

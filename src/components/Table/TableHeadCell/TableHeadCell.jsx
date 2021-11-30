@@ -74,13 +74,13 @@ TableHeadCell.propTypes = {
     direction: PropTypes.number,
   }),
   onSortBy: PropTypes.func,
-  noSort: PropTypes.bool,
+  isSortable: PropTypes.bool,
 };
 
 TableHeadCell.defaultProps = {
   sortBy: null,
   onSortBy: noop,
-  noSort: false,
+  isSortable: false,
 };
 
 export default TableHeadCell;

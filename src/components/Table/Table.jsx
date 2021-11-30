@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import differenceBy from 'lodash/differenceBy';
@@ -9,15 +9,13 @@ import TableHeadCell from './TableHeadCell/TableHeadCell';
 import TableFooter from './TableFooter/TableFooter';
 import styles from './Table.module.css';
 
-const Table = (props) => {
-  const {
-    columns, items, checkable,
-    perPage, totalPages,
-    itemsCount, totalCount,
-    page, onPageChange,
-  } = props;
+const Table = ({
+  items, columns, totalCount, totalPages, onPageChange,
+  page, perPage, checkable, paginationWithStroke,
+}) => {
   const [sortBy, setSortBy] = useState(null);
   const [checkedItems, setCheckedItems] = useState([]);
+  const [currentPage, setCurrentPage] = useState(page - 1);
 
   const allChecked = items.every((item) => checkedItems.some(
     (checkedItem) => checkedItem.id === item.id,
@@ -31,9 +29,16 @@ const Table = (props) => {
     }
   }
 
-  const handleSortBy = (newSortBy) => setSortBy(newSortBy);
+  const changePage = useCallback((current) => {
+    onPageChange(current.selected + 1);
+    setCurrentPage(current.selected);
+  }, [onPageChange]);
 
-  const handleGoToPage = (selectedPage) => onPageChange(selectedPage);
+  useEffect(() => {
+    setCurrentPage(page - 1);
+  }, [page]);
+
+  const handleSortBy = (newSortBy) => setSortBy(newSortBy);
 
   const handleAllCheck = () => {
     if (allChecked) {
@@ -109,12 +114,12 @@ const Table = (props) => {
           {items.map((item, ix) => renderRow(item, item.id || ix, checkedIds.includes(item.id)))}
         </div>
         <TableFooter
+          count={totalCount}
+          pagesCount={totalPages}
           perPage={perPage}
-          page={page}
-          totalPages={totalPages}
-          itemsCount={itemsCount}
-          totalCount={totalCount}
-          onGoToPage={handleGoToPage}
+          onPageChange={changePage}
+          page={currentPage}
+          paginationWithStroke={paginationWithStroke}
         />
       </>
     );
@@ -150,28 +155,30 @@ const Table = (props) => {
 };
 
 Table.propTypes = {
-  columns: PropTypes.arrayOf(PropTypes.shape({
-    key: PropTypes.string,
-    width: PropTypes.string,
-    title: PropTypes.string,
-  })).isRequired,
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   sortBy: PropTypes.shape({
     field: PropTypes.string,
     direction: PropTypes.number,
   }),
-  checkable: PropTypes.bool,
+  columns: PropTypes.arrayOf(PropTypes.shape({
+    key: PropTypes.string,
+    width: PropTypes.string,
+    title: PropTypes.string,
+  })).isRequired,
+  totalCount: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired,
   onPageChange: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
-  perPage: PropTypes.number.isRequired,
-  totalPages: PropTypes.number.isRequired,
-  itemsCount: PropTypes.number.isRequired,
-  totalCount: PropTypes.number.isRequired,
+  perPage: PropTypes.number,
+  checkable: PropTypes.bool,
+  paginationWithStroke: PropTypes.bool,
 };
 
 Table.defaultProps = {
   sortBy: null,
+  perPage: 10,
   checkable: false,
+  paginationWithStroke: false,
 };
 
 export default Table;

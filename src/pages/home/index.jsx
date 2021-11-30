@@ -112,9 +112,8 @@ const Home = () => {
           <Table
             items={data.items}
             columns={columns}
-            totalPages={data.totalPages}
-            itemsCount={data.items.length}
             totalCount={data.count}
+            totalPages={data.totalPages}
             onPageChange={onPageChange}
             page={page}
             perPage={10}
