@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import noop from 'lodash/noop';
 import differenceBy from 'lodash/differenceBy';
 
 import Checkbox from 'components/Checkbox';
@@ -12,21 +11,19 @@ import styles from './Table.module.css';
 
 const Table = (props) => {
   const {
-    columns, items, checkable, onUpdate,
-    pageSize, totalPages,
+    columns, items, checkable,
+    perPage, totalPages,
     itemsCount, totalCount,
+    page, onPageChange,
   } = props;
-  const [page, setPage] = useState(1);
   const [sortBy, setSortBy] = useState(null);
   const [checkedItems, setCheckedItems] = useState([]);
 
-  const allChecked = items.every((item) => {
-    return checkedItems.some((checkedItem) => checkedItem.id === item.id);
-  });
+  const allChecked = items.every((item) => checkedItems.some(
+    (checkedItem) => checkedItem.id === item.id,
+  ));
 
-  const fullWidth = columns.reduce((sum, col) => {
-    return sum + Number(col.width.replace('%', ''));
-  }, 0);
+  const fullWidth = columns.reduce((sum, col) => sum + Number(col.width.replace('%', '')), 0);
 
   if (fullWidth !== 100) {
     if (process.env.NODE_ENV === 'development') {
@@ -36,12 +33,7 @@ const Table = (props) => {
 
   const handleSortBy = (newSortBy) => setSortBy(newSortBy);
 
-  const handleGoToPage = (selectedPage) => setPage(selectedPage);
-
-  useEffect(() => {
-    onUpdate(page, pageSize, sortBy?.field, sortBy?.direction);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sortBy, page]);
+  const handleGoToPage = (selectedPage) => onPageChange(selectedPage);
 
   const handleAllCheck = () => {
     if (allChecked) {
@@ -117,7 +109,7 @@ const Table = (props) => {
           {items.map((item, ix) => renderRow(item, item.id || ix, checkedIds.includes(item.id)))}
         </div>
         <TableFooter
-          pageSize={pageSize}
+          perPage={perPage}
           page={page}
           totalPages={totalPages}
           itemsCount={itemsCount}
@@ -148,7 +140,7 @@ const Table = (props) => {
             column={column}
             sortBy={sortBy}
             onSortBy={handleSortBy}
-            noSort={column.noSort}
+            isSortable={column.isSortable}
           />
         ))}
       </div>
@@ -169,8 +161,9 @@ Table.propTypes = {
     direction: PropTypes.number,
   }),
   checkable: PropTypes.bool,
-  onUpdate: PropTypes.func,
-  pageSize: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+  page: PropTypes.number.isRequired,
+  perPage: PropTypes.number.isRequired,
   totalPages: PropTypes.number.isRequired,
   itemsCount: PropTypes.number.isRequired,
   totalCount: PropTypes.number.isRequired,
@@ -179,7 +172,6 @@ Table.propTypes = {
 Table.defaultProps = {
   sortBy: null,
   checkable: false,
-  onUpdate: noop,
 };
 
 export default Table;

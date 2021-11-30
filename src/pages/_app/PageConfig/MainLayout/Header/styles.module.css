@@ -1,9 +1,10 @@
 .header {
   min-height: 72px;
   padding: 0 32px;
+  background-color: var(--black);
   display: flex;
   align-items: center;
-  background-color: var(--black);
+  flex: 0 1 auto;
 }
 
 .logo {

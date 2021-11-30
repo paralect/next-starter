@@ -10,6 +10,6 @@ export const resendEmail = (data) => api.post('/account/resend-email', data);
 export const updateProfile = (data) => api.post('/account/update-profile', data);
 
 export const getCurrentUser = () => api.get('/users/current');
-
-export const uploadProfilePhoto = (data) => api.post('/files/upload-photo', data);
-export const removeProfilePhoto = () => api.delete('/files/remove-photo');
+export const getUsers = (data) => api.get('/users', data);
+export const uploadProfilePhoto = (data) => api.post('/users/upload-photo', data);
+export const removeProfilePhoto = () => api.delete('/users/remove-photo');

@@ -35,15 +35,15 @@ PageNumber.propTypes = {
 };
 
 const TableFooter = ({
-  page, pageSize, totalPages,
+  page, perPage, totalPages,
   itemsCount, totalCount, onGoToPage,
 }) => {
   if (!itemsCount) {
     return null;
   }
 
-  const firstItemIndex = (page - 1) * pageSize + 1;
-  const itemsStr = `${firstItemIndex}-${firstItemIndex + itemsCount - 1}`;
+  const firstItemIndex = (page - 1) * perPage + 1;
+  const itemsStr = `${firstItemIndex} to ${firstItemIndex + itemsCount - 1}`;
 
   function handlePrevPageClick() {
     onGoToPage(page - 1);
@@ -116,7 +116,7 @@ const TableFooter = ({
 };
 
 TableFooter.propTypes = {
-  pageSize: PropTypes.number.isRequired,
+  perPage: PropTypes.number.isRequired,
   page: PropTypes.number.isRequired,
   totalPages: PropTypes.number.isRequired,
   itemsCount: PropTypes.number.isRequired,
