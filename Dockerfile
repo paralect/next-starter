@@ -6,6 +6,6 @@ COPY ["./package*.json", "/app/"]
 RUN npm install --silent
 COPY . ./
 
-EXPOSE 3001
+EXPOSE 3002
 
 CMD npm start
