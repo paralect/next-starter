@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import noop from 'lodash/noop';
 import differenceBy from 'lodash/differenceBy';
 
 import Checkbox from 'components/Checkbox';
@@ -10,23 +9,19 @@ import TableHeadCell from './TableHeadCell/TableHeadCell';
 import TableFooter from './TableFooter/TableFooter';
 import styles from './Table.module.css';
 
-const Table = (props) => {
-  const {
-    columns, items, checkable, onUpdate,
-    pageSize, totalPages,
-    itemsCount, totalCount,
-  } = props;
-  const [page, setPage] = useState(1);
+const Table = ({
+  items, columns, totalCount, totalPages, onPageChange,
+  page, perPage, checkable, paginationWithStroke,
+}) => {
   const [sortBy, setSortBy] = useState(null);
   const [checkedItems, setCheckedItems] = useState([]);
+  const [currentPage, setCurrentPage] = useState(page - 1);
 
-  const allChecked = items.every((item) => {
-    return checkedItems.some((checkedItem) => checkedItem.id === item.id);
-  });
+  const allChecked = items.every((item) => checkedItems.some(
+    (checkedItem) => checkedItem.id === item.id,
+  ));
 
-  const fullWidth = columns.reduce((sum, col) => {
-    return sum + Number(col.width.replace('%', ''));
-  }, 0);
+  const fullWidth = columns.reduce((sum, col) => sum + Number(col.width.replace('%', '')), 0);
 
   if (fullWidth !== 100) {
     if (process.env.NODE_ENV === 'development') {
@@ -34,14 +29,16 @@ const Table = (props) => {
     }
   }
 
-  const handleSortBy = (newSortBy) => setSortBy(newSortBy);
-
-  const handleGoToPage = (selectedPage) => setPage(selectedPage);
+  const changePage = useCallback((current) => {
+    onPageChange(current.selected + 1);
+    setCurrentPage(current.selected);
+  }, [onPageChange]);
 
   useEffect(() => {
-    onUpdate(page, pageSize, sortBy?.field, sortBy?.direction);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sortBy, page]);
+    setCurrentPage(page - 1);
+  }, [page]);
+
+  const handleSortBy = (newSortBy) => setSortBy(newSortBy);
 
   const handleAllCheck = () => {
     if (allChecked) {
@@ -117,12 +114,12 @@ const Table = (props) => {
           {items.map((item, ix) => renderRow(item, item.id || ix, checkedIds.includes(item.id)))}
         </div>
         <TableFooter
-          pageSize={pageSize}
-          page={page}
-          totalPages={totalPages}
-          itemsCount={itemsCount}
-          totalCount={totalCount}
-          onGoToPage={handleGoToPage}
+          count={totalCount}
+          pagesCount={totalPages}
+          perPage={perPage}
+          onPageChange={changePage}
+          page={currentPage}
+          paginationWithStroke={paginationWithStroke}
         />
       </>
     );
@@ -148,7 +145,7 @@ const Table = (props) => {
             column={column}
             sortBy={sortBy}
             onSortBy={handleSortBy}
-            noSort={column.noSort}
+            isSortable={column.isSortable}
           />
         ))}
       </div>
@@ -158,28 +155,30 @@ const Table = (props) => {
 };
 
 Table.propTypes = {
-  columns: PropTypes.arrayOf(PropTypes.shape({
-    key: PropTypes.string,
-    width: PropTypes.string,
-    title: PropTypes.string,
-  })).isRequired,
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   sortBy: PropTypes.shape({
     field: PropTypes.string,
     direction: PropTypes.number,
   }),
-  checkable: PropTypes.bool,
-  onUpdate: PropTypes.func,
-  pageSize: PropTypes.number.isRequired,
-  totalPages: PropTypes.number.isRequired,
-  itemsCount: PropTypes.number.isRequired,
+  columns: PropTypes.arrayOf(PropTypes.shape({
+    key: PropTypes.string,
+    width: PropTypes.string,
+    title: PropTypes.string,
+  })).isRequired,
   totalCount: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+  page: PropTypes.number.isRequired,
+  perPage: PropTypes.number,
+  checkable: PropTypes.bool,
+  paginationWithStroke: PropTypes.bool,
 };
 
 Table.defaultProps = {
   sortBy: null,
+  perPage: 10,
   checkable: false,
-  onUpdate: noop,
+  paginationWithStroke: false,
 };
 
 export default Table;

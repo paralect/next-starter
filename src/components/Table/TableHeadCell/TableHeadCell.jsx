@@ -9,7 +9,7 @@ import { ArrowUpIcon, ArrowDownIcon, ArrowDoubleIcon } from 'public/icons';
 import styles from './TableHeadCell.module.css';
 
 const TableHeadCell = ({
-  column, sortBy, onSortBy, noSort,
+  column, sortBy, onSortBy, isSortable,
 }) => {
   const {
     key, width, align, title, minWidth,
@@ -30,7 +30,7 @@ const TableHeadCell = ({
   }
 
   function handleSort() {
-    if (noSort || !onSortBy) {
+    if (!isSortable || !onSortBy) {
       return;
     }
     let newSortBy = {
@@ -56,7 +56,7 @@ const TableHeadCell = ({
       style={cellStyle}
     >
       {title}
-      {!noSort && getSortedIcon(key)}
+      {isSortable && getSortedIcon(key)}
     </div>
   );
 };
@@ -74,13 +74,13 @@ TableHeadCell.propTypes = {
     direction: PropTypes.number,
   }),
   onSortBy: PropTypes.func,
-  noSort: PropTypes.bool,
+  isSortable: PropTypes.bool,
 };
 
 TableHeadCell.defaultProps = {
   sortBy: null,
   onSortBy: noop,
-  noSort: false,
+  isSortable: false,
 };
 
 export default TableHeadCell;

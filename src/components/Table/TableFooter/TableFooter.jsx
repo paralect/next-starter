@@ -1,127 +1,53 @@
-/* eslint-disable react/no-array-index-key,react/jsx-no-bind */
-import React from 'react';
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
+import ReactPaginate from 'react-paginate';
 
-import IconButton from 'components/IconButton';
-import ArrowRightIcon from 'public/icons/arrow-right.svg';
-import ArrowLeftIcon from 'public/icons/arrow-left.svg';
+import { ArrowLeftIcon, ArrowRightIcon } from 'public/icons';
+
+import SearchInfo from './SearchInfo';
 
 import styles from './TableFooter.module.css';
 
-const PageNumber = ({ number, onClick, isCurrent }) => {
-  const handleClick = () => {
-    onClick(number);
-  };
-
-  return (
-    <button
-      type="button"
-      onClick={handleClick}
-      className={cn(
-        styles.pageNumber,
-        { [styles.current]: isCurrent },
-      )}
-    >
-      {number}
-    </button>
-  );
-};
-
-PageNumber.propTypes = {
-  number: PropTypes.number.isRequired,
-  isCurrent: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired,
-};
-
 const TableFooter = ({
-  page, pageSize, totalPages,
-  itemsCount, totalCount, onGoToPage,
+  count, pagesCount, perPage, onPageChange,
+  page, paginationWithStroke,
 }) => {
-  if (!itemsCount) {
-    return null;
-  }
-
-  const firstItemIndex = (page - 1) * pageSize + 1;
-  const itemsStr = `${firstItemIndex}-${firstItemIndex + itemsCount - 1}`;
-
-  function handlePrevPageClick() {
-    onGoToPage(page - 1);
-  }
-
-  function handleNextPageClick() {
-    onGoToPage(page + 1);
-  }
-
-  const renderPages = () => {
-    if (totalPages <= 7) {
-      return (
-        [...Array(totalPages)].map((_, i) => (
-          <PageNumber
-            onClick={onGoToPage}
-            number={i + 1}
-            isCurrent={page === i + 1}
-            key={i}
-          />
-        ))
-      );
-    }
-    return (
-      <>
-        {[...Array(3)].map((_, i) => (
-          <PageNumber
-            onClick={onGoToPage}
-            number={i + 1}
-            isCurrent={page === i + 1}
-            key={i}
-          />
-        ))}
-        <div>...</div>
-        {([...Array(3)].map((_, i) => (
-          <PageNumber
-            onClick={onGoToPage}
-            number={totalPages - i}
-            isCurrent={page === totalPages - i}
-            key={totalPages - i - 1}
-          />
-        ))).reverse()}
-      </>
-    );
-  };
+  if (pagesCount <= 1) return null;
 
   return (
-    <div className={styles.tableFooter}>
-
-      <div>
-        {`Showing ${itemsStr} of ${totalCount} results`}
-      </div>
-
-      {totalPages > 1 ? (
-        <div className={styles.controls}>
-          <IconButton
-            Icon={ArrowLeftIcon}
-            disabled={page === 1}
-            onClick={handlePrevPageClick}
-          />
-          {renderPages()}
-          <IconButton
-            Icon={ArrowRightIcon}
-            disabled={page === totalPages}
-            onClick={handleNextPageClick}
-          />
-        </div>
-      ) : <div />}
+    <div className={styles.paginationContainer}>
+      <SearchInfo count={count} perPage={perPage} page={page} />
+      <ReactPaginate
+        containerClassName={cn({
+          [styles.withStroke]: paginationWithStroke,
+        }, styles.pagination)}
+        previousLabel={<ArrowLeftIcon className={styles.arrow} />}
+        previousLinkClassName={styles.prev}
+        nextLabel={<ArrowRightIcon className={styles.arrow} />}
+        nextLinkClassName={styles.next}
+        breakLabel="..."
+        breakClassName={styles.break}
+        activeLinkClassName={styles.activePage}
+        pageClassName={styles.page}
+        disabledClassName={styles.disabled}
+        pageCount={pagesCount}
+        itemsCountPerPage={pagesCount}
+        marginPagesDisplayed={3}
+        pageRangeDisplayed={2}
+        onPageChange={onPageChange}
+        forcePage={page}
+      />
     </div>
   );
 };
 
 TableFooter.propTypes = {
-  pageSize: PropTypes.number.isRequired,
+  count: PropTypes.number.isRequired,
+  pagesCount: PropTypes.number.isRequired,
+  perPage: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
-  totalPages: PropTypes.number.isRequired,
-  itemsCount: PropTypes.number.isRequired,
-  totalCount: PropTypes.number.isRequired,
-  onGoToPage: PropTypes.func.isRequired,
+  paginationWithStroke: PropTypes.bool.isRequired,
 };
-
-export default TableFooter;
+export default memo(TableFooter);

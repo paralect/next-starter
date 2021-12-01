@@ -1,42 +1,39 @@
+.container {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+
+  &.loading {
+    opacity: 0.2;
+    transition: opacity 0.2s;
+    pointer-events: none;
+  }
+}
+
 .title {
   margin-top: 32px;
 }
 
-.meeting {
-  border: 1px solid var(--gray);
-  border-radius: 6px;
-  box-sizing: border-box;
-  margin: 20px 0;
-  padding: 10px 15px;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    background-color: #d4d8dd25;
-  }
+.sortBarContainer {
+  margin: 24px 0 32px;
+  display: flex;
+  justify-content: space-between;
 }
 
-.time {
-  font-weight: 600;
-  color: var(--blue);
-  display: inline-flex;
+.searchField {
+  width: 360px;
+}
+
+.select {
+  width: 260px;
+}
+
+.helperContainer {
+  height: 100%;
+  display: flex;
+  justify-content: center;
   align-items: center;
-
-  span {
-    margin-left: 5px;
-  }
-}
-
-.description {
-  margin: 10px 0;
-  font-size: 14px;
-}
-
-.participants-title {
-  font-size: 14px;
-  margin-bottom: 10px;
-}
-
-.participants-list {
-  margin-top: 10px;
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--gray-dark);
 }

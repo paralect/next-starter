@@ -17,7 +17,7 @@ export const path = {
   signUp: '/sign-up',
   forgotPassword: '/forgot-password',
   resetPassword: '/reset-password',
-  expirePassword: '/expire-password',
+  expireToken: '/expire-token',
   profile: '/profile',
 };
 
@@ -52,8 +52,8 @@ export const configuration = {
     scope: scope.PUBLIC,
     layout: layout.UNAUTHORIZED,
   },
-  expirePassword: {
-    path: path.expirePassword,
+  expireToken: {
+    path: path.expireToken,
     scope: scope.PUBLIC,
     layout: layout.UNAUTHORIZED,
   },
