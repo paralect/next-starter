@@ -1,19 +1,19 @@
 {
   "name": "next-starter",
+  "version": "0.1.0",
+  "private": true,
   "author": "Paralect",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/paralect/next-starter.git"
-  },
   "keywords": [
     "react",
     "redux",
     "next",
     "paralect"
   ],
-  "version": "0.1.0",
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paralect/next-starter.git"
+  },
   "scripts": {
     "dev": "next dev -p 3002",
     "start": "next build && next start -p 3002",
@@ -72,5 +72,13 @@
     "style-loader": "3.3.1",
     "stylelint": "14.1.0",
     "stylelint-config-standard": "24.0.0"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --ext js --ext jsx --fix"
+    ],
+    "*.css": [
+      "stylelint --fix"
+    ]
   }
 }
