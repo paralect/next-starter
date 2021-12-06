@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import uniqueId from 'lodash/uniqueId';
 
+const symbolsPerSecond = 25;
+
 const initialState = [];
 
 const toastSlice = createSlice({
@@ -18,9 +20,18 @@ const { addToast, removeToast } = toastSlice.actions;
 
 const createToast = (data) => (dispatch) => {
   const id = uniqueId('toast_');
+  let duration = (data.text.length / symbolsPerSecond) * 1000;
+  if (duration < 3000) duration = 3000;
 
-  dispatch(addToast({ message: { id, ...data } }));
-  setTimeout(() => dispatch(removeToast({ id })), 3000);
+  dispatch(addToast({
+    message: {
+      id,
+      duration,
+      ...data,
+    },
+  }));
+
+  setTimeout(() => dispatch(removeToast({ id })), duration);
 };
 
 const success = (text) => (dispatch) => {

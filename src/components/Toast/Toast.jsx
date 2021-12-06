@@ -22,13 +22,18 @@ const iconsList = {
   info: <InfoIcon />,
 };
 
-const Toast = ({ type, message, onClose }) => {
+const Toast = ({
+  type, message, duration, onClose,
+}) => {
   const [close, setClose] = useState(false);
 
+  setTimeout(() => setClose(true), duration - 300);
+
   return (
-    <div className={cn({
-      [styles.close]: close,
-    }, styles.container, styles[type])}
+    <div
+      className={cn({
+        [styles.close]: close,
+      }, styles.container, styles[type])}
     >
       {iconsList[type]}
       <div className={styles.message}>{message}</div>
@@ -48,6 +53,7 @@ const Toast = ({ type, message, onClose }) => {
 Toast.propTypes = {
   type: PropTypes.oneOf(Object.keys(types)),
   message: PropTypes.string.isRequired,
+  duration: PropTypes.number.isRequired,
   onClose: PropTypes.func,
 };
 
