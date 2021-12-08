@@ -1,11 +1,11 @@
-FROM node:14.14-alpine as build
-
-WORKDIR /app
-
-COPY ["./package*.json", "/app/"]
-RUN npm install --silent
-COPY . ./
+FROM --platform=linux/amd64 node:16.13.1-alpine3.13
 
 EXPOSE 3002
 
-CMD npm start
+WORKDIR /app
+COPY ["./package*.json", "/app/"]
+RUN npm ci --quiet
+
+COPY . ./
+
+CMD npm run build && npm start

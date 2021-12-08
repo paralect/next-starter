@@ -5,9 +5,8 @@ import * as socketService from 'services/socket.service';
 const PrivateScope = ({ children }) => {
   useEffect(() => {
     socketService.connect();
-    return () => {
-      socketService.disconnect();
-    };
+
+    return () => socketService.disconnect();
   }, []);
 
   return children;

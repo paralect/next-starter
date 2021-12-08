@@ -24,7 +24,7 @@ const Table = ({
   const fullWidth = columns.reduce((sum, col) => sum + Number(col.width.replace('%', '')), 0);
 
   if (fullWidth !== 100) {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NEXT_PUBLIC_APP_ENV === 'development') {
       console.warn('Table full width !== 100:', fullWidth); // eslint-disable-line no-console
     }
   }
