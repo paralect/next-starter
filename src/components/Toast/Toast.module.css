@@ -6,7 +6,7 @@
   display: flex;
   opacity: 1;
   transition: all 0.3s ease-in-out;
-  animation: slide 3s ease;
+  animation: slide 0.3s ease-in-out;
 
   &.close {
     animation: close 0.3s;
@@ -56,19 +56,10 @@
 @keyframes slide {
   0% {
     transform: translateX(320px);
-    opacity: 1;
-  }
-
-  10% {
-    transform: translateX(0);
-  }
-
-  90% {
-    opacity: 1;
   }
 
   100% {
-    opacity: 0;
+    transform: translateX(0);
   }
 }
 

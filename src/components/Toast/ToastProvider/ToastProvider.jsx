@@ -22,6 +22,7 @@ const ToasterProvider = () => {
           key={e.id}
           type={e.type}
           message={e.text}
+          duration={e.duration}
           onClose={() => onClose(e.id)}
         />
       ))}
