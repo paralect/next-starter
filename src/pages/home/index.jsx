@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { useFetch } from 'hooks/useFetch';
 import useDebounce from 'hooks/useDebounce';
 
-import { getUsers } from 'resources/user/user.api';
+import { list } from 'resources/user/user.api';
 
 import Table from 'components/Table';
 import Input from 'components/Input';
@@ -71,7 +71,7 @@ const Home = () => {
     setPage(1);
   }, [debouncedSearch]);
 
-  const { data, loading } = useFetch(getUsers, { params });
+  const { data, loading } = useFetch(list, { params });
 
   if (loading && data === null) {
     return (

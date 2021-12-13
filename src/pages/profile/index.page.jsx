@@ -7,7 +7,7 @@ import Head from 'next/head';
 
 import useHandleError from 'hooks/useHandleError';
 import useToast from 'hooks/useToast';
-import { updateProfile } from 'resources/user/user.api';
+import { updateCurrent } from 'resources/user/user.api';
 import { userSelectors } from 'resources/user/user.slice';
 
 import Input from 'components/Input';
@@ -39,7 +39,7 @@ const Profile = () => {
     try {
       setLoading(true);
 
-      await updateProfile({ password });
+      await updateCurrent({ password });
 
       toastSuccess('Your password have been successfully updated.');
     } catch (e) {

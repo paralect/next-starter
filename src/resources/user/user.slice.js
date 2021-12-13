@@ -30,8 +30,8 @@ const signOut = () => async (dispatch) => {
   await dispatch(removeUser());
 };
 
-const getCurrentUser = () => async (dispatch) => {
-  const user = await api.getCurrentUser();
+const getCurrent = () => async (dispatch) => {
+  const user = await api.getCurrent();
   dispatch(setUser({ user }));
 };
 
@@ -41,7 +41,7 @@ const userActions = {
   signUp,
   signIn,
   signOut,
-  getCurrentUser,
+  getCurrent,
 };
 
 const selectUser = ({ user }) => user;

@@ -11,6 +11,7 @@ import ToasterProvider from 'components/Toast/ToastProvider';
 import PageConfig from './PageConfig';
 
 import 'styles/globals.css';
+import { getCurrent } from '../../resources/user/user.api';
 
 const App = ({ Component, pageProps }) => {
   const [loading, setLoading] = useState(true);
@@ -18,7 +19,7 @@ const App = ({ Component, pageProps }) => {
   useEffect(() => {
     async function init() {
       try {
-        await store.dispatch(userActions.getCurrentUser());
+        await store.dispatch(userActions.getCurrent());
       } catch (error) {
         // @todo: add something like sentry
       } finally {
