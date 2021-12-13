@@ -1,16 +1,20 @@
 import useToast from './useToast';
 
-export default function useHandleError() {
+export default function useHandleError(isShowAllErrors = false) {
   const { toastError } = useToast();
 
   return (e, setError) => {
-    const { errors: { _global, ...errors } } = e.data;
+    const { errors: { global, ...errors } } = e.data;
 
-    if (_global) toastError(_global[0]);
+    if (global) toastError(global);
 
     if (setError) {
       Object.keys(errors).forEach((key) => {
-        setError(key, { message: errors[key].join(' ') }, { shouldFocus: true });
+        const message = isShowAllErrors
+          ? errors[key].join(' ')
+          : errors[key][0];
+
+        setError(key, { message }, { shouldFocus: true });
       });
     }
   };
