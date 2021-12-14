@@ -6,7 +6,7 @@ import cn from 'classnames';
 import { uploadProfilePhoto, removeProfilePhoto } from 'resources/user/user.api';
 import { userSelectors } from 'resources/user/user.slice';
 
-import useHandleError from 'hooks/useHandleError';
+import useHandleError from 'hooks/use-handle-error';
 
 import { AddIcon, PenIcon } from 'public/icons';
 
@@ -95,7 +95,7 @@ const PhotoUpload = () => {
             JPG, JPEG or PNG
             Max size = 2MB
           </p>
-          {user.avatarUrl ? (
+          {user.avatarUrl && (
             <Button
               type="text"
               htmlType="submit"
@@ -105,10 +105,10 @@ const PhotoUpload = () => {
             >
               Remove
             </Button>
-          ) : null}
+          )}
         </span>
       </div>
-      {errorMessage ? <p className={styles.errorMessage}>{errorMessage}</p> : null}
+      {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
     </>
   );
 };

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { path } from 'pages/routes';
 
-import { useOutsideClick } from 'hooks/useOutsideClick';
+import { useOutsideClick } from 'hooks/use-outside-click';
 
 import { userActions, userSelectors } from 'resources/user/user.slice';
 

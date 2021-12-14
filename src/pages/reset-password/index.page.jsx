@@ -1,15 +1,13 @@
+import * as yup from 'yup';
 import { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
-import * as yup from 'yup';
 import Head from 'next/head';
 
 import { path } from 'pages/routes';
-
 import { resetPassword } from 'resources/user/user.api';
-
-import useHandleError from 'hooks/useHandleError';
+import useHandleError from 'hooks/use-handle-error';
 
 import Input from 'components/Input';
 import Button from 'components/Button';

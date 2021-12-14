@@ -2,8 +2,8 @@ import { useCallback, useLayoutEffect, useState } from 'react';
 import cn from 'classnames';
 import Head from 'next/head';
 
-import { useFetch } from 'hooks/useFetch';
-import useDebounce from 'hooks/useDebounce';
+import { useFetch } from 'hooks/use-fetch';
+import useDebounce from 'hooks/use-debounce';
 
 import { list } from 'resources/user/user.api';
 

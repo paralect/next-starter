@@ -10,7 +10,7 @@ import { ArrowLeftIcon, ArrowRightIcon, CalendarIcon } from 'public/icons';
 import Input from 'components/Input/Input';
 import IconButton from 'components/IconButton';
 
-import { MONTHS } from 'helpers/constants';
+import { MONTHS } from './constants';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import styles from './DatePicker.module.css';

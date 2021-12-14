@@ -11,7 +11,7 @@ import { forgotPassword } from 'resources/user/user.api';
 
 import Input from 'components/Input';
 import Button from 'components/Button';
-import useHandleError from 'hooks/useHandleError';
+import useHandleError from 'hooks/use-handle-error';
 import Link from 'components/Link';
 
 import styles from './styles.module.css';

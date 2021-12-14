@@ -5,7 +5,7 @@ import qs from 'qs';
 import config from 'config';
 
 class ApiError extends Error {
-  constructor(status = 500, statusText = 'Internal Server Error', data) {
+  constructor(data, status = 500, statusText = 'Internal Server Error') {
     super(`${status} ${statusText}`);
 
     this.constructor = ApiError;
@@ -26,7 +26,7 @@ class ApiError extends Error {
 }
 const throwApiError = ({ status, statusText, data }) => {
   console.error(`API Error: ${status} ${statusText}`, data); //eslint-disable-line
-  throw new ApiError(status, statusText, data);
+  throw new ApiError(data, status, statusText);
 };
 
 class ApiClient {

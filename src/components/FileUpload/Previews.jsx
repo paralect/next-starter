@@ -1,6 +1,6 @@
 import React, { memo, useCallback } from 'react';
 
-import bytesToSize from 'helpers/fileUpload/bytes-to-size';
+import bytesToSize from 'helpers/file-upload/bytes-to-size';
 
 import { CloseIcon, DocumentEmptyIcon } from 'public/icons';
 

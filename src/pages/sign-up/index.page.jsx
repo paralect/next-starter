@@ -6,11 +6,8 @@ import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import Head from 'next/head';
 
 import config from 'config';
-
 import { path } from 'pages/routes';
-
-import useHandleError from 'hooks/useHandleError';
-
+import useHandleError from 'hooks/use-handle-error';
 import { userActions } from 'resources/user/user.slice';
 
 import Input from 'components/Input';

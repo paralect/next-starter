@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import { path } from 'pages/routes';
@@ -27,4 +26,4 @@ UnauthorizedLayout.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default memo(UnauthorizedLayout);
+export default UnauthorizedLayout;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 
-import useToast from 'hooks/useToast';
+import useToast from 'hooks/use-toast';
 
 import store from 'resources/store';
 

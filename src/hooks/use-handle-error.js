@@ -1,4 +1,4 @@
-import useToast from './useToast';
+import useToast from './use-toast';
 
 export default function useHandleError(isShowAllErrors = false) {
   const { toastError } = useToast();

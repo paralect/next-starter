@@ -1,22 +1,19 @@
 import * as yup from 'yup';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import Head from 'next/head';
 
 import { path } from 'pages/routes';
-
-import useHandleError from 'hooks/useHandleError';
-import { userActions, userSelectors } from 'resources/user/user.slice';
+import useHandleError from 'hooks/use-handle-error';
+import { userActions } from 'resources/user/user.slice';
 
 import Input from 'components/Input';
 import Button from 'components/Button';
 import Link from 'components/Link';
 import MemoCard from 'components/MemoCard';
 
-import { useRouter } from 'next/router';
-
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import styles from './styles.module.css';
 
 const schema = yup.object().shape({
@@ -25,21 +22,14 @@ const schema = yup.object().shape({
 });
 
 const SignIn = () => {
-  const router = useRouter();
   const handleError = useHandleError();
   const dispatch = useDispatch();
-
-  const user = useSelector(userSelectors.selectUser);
 
   const {
     handleSubmit, formState: { errors }, setError, control,
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  useEffect(() => {
-    if (user) router.push(path.home);
-  }, [router, user]);
 
   const [loading, setLoading] = useState(false);
 

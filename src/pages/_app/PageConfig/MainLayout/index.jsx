@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import Header from './Header';
@@ -20,4 +19,4 @@ MainLayout.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default memo(MainLayout);
+export default MainLayout;

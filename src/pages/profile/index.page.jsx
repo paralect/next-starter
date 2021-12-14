@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import Head from 'next/head';
 
-import useHandleError from 'hooks/useHandleError';
-import useToast from 'hooks/useToast';
+import useHandleError from 'hooks/use-handle-error';
+import useToast from 'hooks/use-toast';
 import { updateCurrent } from 'resources/user/user.api';
 import { userSelectors } from 'resources/user/user.slice';
 

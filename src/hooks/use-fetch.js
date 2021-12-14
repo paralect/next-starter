@@ -18,21 +18,27 @@ export const useFetch = (fetchFunc, {
 
   useEffect(() => {
     const fetchData = async () => {
+      let response = null;
+      let responseError = null;
+
       try {
         setState({ loading: true });
-        let response;
+
         if (typeof fetchFunc === 'function') {
           response = await fetchFunc(params);
         } else {
           response = await Promise.all(fetchFunc);
         }
+
         setState({ data: response, loading: false });
-        if (onSuccess) onSuccess();
+
+        if (onSuccess) onSuccess(response);
       } catch (err) {
+        responseError = err;
         setState({ error: err, loading: false });
-        if (onError) onError();
+        if (onError) onError(responseError);
       } finally {
-        if (onFinish) onFinish();
+        if (onFinish) onFinish(response, responseError);
       }
     };
 

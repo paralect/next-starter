@@ -3,11 +3,10 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import { path } from 'pages/routes';
-
 import { resendEmail } from 'resources/user/user.api';
+import useHandleError from 'hooks/use-handle-error';
 
 import Button from 'components/Button';
-import useHandleError from 'hooks/useHandleError';
 
 import styles from './styles.module.css';
 

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone-uploader-with-credentials';
 import { getDroppedOrSelectedFiles } from 'html5-file-selector';
 
-import addPostfix from 'helpers/fileUpload/add-postfix';
+import addPostfix from 'helpers/file-upload/add-postfix';
 
 import Input from './Input';
 import Layout from './Layout';

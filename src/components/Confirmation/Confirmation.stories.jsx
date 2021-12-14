@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 
 import store from 'resources/store';
 
-import useToast from 'hooks/useToast';
+import useToast from 'hooks/use-toast';
 
 import Avatar from 'components/Avatar';
 import Button from 'components/Button';

@@ -6,6 +6,7 @@ export const useOutsideClick = (ref, handler) => {
       if (!ref.current || ref.current.contains(event.target)) return;
       handler(event);
     };
+
     document.addEventListener('mousedown', listener);
     document.addEventListener('touchstart', listener);
 

@@ -11,7 +11,6 @@ import ToasterProvider from 'components/Toast/ToastProvider';
 import PageConfig from './PageConfig';
 
 import 'styles/globals.css';
-import { getCurrent } from '../../resources/user/user.api';
 
 const App = ({ Component, pageProps }) => {
   const [loading, setLoading] = useState(true);
@@ -31,12 +30,11 @@ const App = ({ Component, pageProps }) => {
   }, []);
 
   if (loading) return null;
-  // @todo: check how first loading of user data affects on First Contentful Paint
 
   return (
     <>
       <Head>
-        <title>Next starter</title>
+        <title>Ship</title>
       </Head>
       <Provider store={store}>
         <ToasterProvider />
