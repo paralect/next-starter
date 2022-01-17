@@ -2,10 +2,19 @@ FROM --platform=linux/amd64 node:16.13.1-alpine3.13
 
 EXPOSE 3002
 
+ARG NODE_ENV
+ARG APP_ENV
+ARG NEXT_PUBLIC_APP_ENV=$APP_ENV
+
+ENV NODE_ENV=$NODE_ENV
+ENV NEXT_PUBLIC_APP_ENV=$NEXT_PUBLIC_APP_ENV
+
 WORKDIR /app
 COPY ["./package*.json", "/app/"]
 RUN npm ci --quiet
 
 COPY . ./
 
-CMD npm run build && npm start
+RUN npm run build
+
+CMD npm start
