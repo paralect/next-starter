@@ -2,10 +2,13 @@ version: '3.6'
 services:
   web:
     build:
-      context: "./"
+      context: .
       dockerfile: Dockerfile.dev
+      args:
+        APP_ENV: development
+        NODE_ENV: development
     volumes:
-      - "./src:/app/src"
+      - ./src:/app/src
     networks:
       - ship
     ports:
