@@ -1,10 +1,10 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import * as routes from 'routes';
-import { resendEmail } from 'resources/user/user.api';
 import { useHandleError } from 'hooks';
+import { useResendEmail } from 'resources/account/account.api';
 
 import Button from 'components/Button';
 
@@ -16,22 +16,14 @@ const ForgotPassword = () => {
 
   const { email } = router.query;
 
-  const [loading, setLoading] = useState(false);
   const [isSent, setSent] = useState(false);
 
-  const onSubmit = useCallback(async () => {
-    try {
-      setLoading(true);
+  const { mutate: resendEmail, isLoading: isResendEmailLoading } = useResendEmail();
 
-      await resendEmail({ email });
-
-      setSent(true);
-    } catch (e) {
-      handleError(e);
-    } finally {
-      setLoading(false);
-    }
-  }, [email, handleError]);
+  const onSubmit = () => resendEmail({ email }, {
+    onSuccess: () => setSent(true),
+    onError: (e) => handleError(e),
+  });
 
   if (isSent) {
     return (
@@ -64,7 +56,7 @@ const ForgotPassword = () => {
         </p>
         <Button
           onClick={onSubmit}
-          loading={loading}
+          loading={isResendEmailLoading}
           className={styles.button}
         >
           Resend link to

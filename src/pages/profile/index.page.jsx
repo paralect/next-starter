@@ -1,17 +1,14 @@
 import * as yup from 'yup';
 import { useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import Head from 'next/head';
 
 import { useHandleError, useToast } from 'hooks';
 import { updateCurrent } from 'resources/user/user.api';
-import { userSelectors } from 'resources/user/user.slice';
-
+import { useCurrentUser } from 'resources/user/user.hooks';
 import Input from 'components/Input';
 import Button from 'components/Button';
-
 import styles from './styles.module.css';
 
 const schema = yup.object().shape({
@@ -25,7 +22,7 @@ const Profile = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const { email } = useSelector(userSelectors.selectUser);
+  const { data: currentUser } = useCurrentUser();
 
   const {
     handleSubmit, formState: { errors }, setError, control,
@@ -62,7 +59,7 @@ const Profile = () => {
             <Input
               name="email"
               label="Email Address"
-              defaultValue={email}
+              defaultValue={currentUser.email}
               control={control}
               error={errors.email}
               disabled

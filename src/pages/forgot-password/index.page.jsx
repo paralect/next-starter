@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import * as yup from 'yup';
@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 
 import * as routes from 'routes';
 import { useHandleError } from 'hooks';
-import { forgotPassword } from 'resources/user/user.api';
+import { useForgotPassword } from 'resources/account/account.api';
 
 import Input from 'components/Input';
 import Button from 'components/Button';
@@ -24,7 +24,8 @@ const ForgotPassword = () => {
   const handleError = useHandleError();
 
   const [email, setEmail] = useState(null);
-  const [loading, setLoading] = useState(false);
+
+  const { mutate: forgotPassword, isLoading: isForgotPasswordLoading } = useForgotPassword();
 
   const {
     handleSubmit, formState: { errors }, control,
@@ -32,19 +33,10 @@ const ForgotPassword = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = useCallback(async (data) => {
-    try {
-      setLoading(true);
-
-      await forgotPassword(data);
-
-      setEmail(data.email);
-    } catch (e) {
-      handleError(e);
-    } finally {
-      setLoading(false);
-    }
-  }, [handleError]);
+  const onSubmit = (data) => forgotPassword(data, {
+    onSuccess: () => setEmail(data.email),
+    onError: (e) => handleError(e),
+  });
 
   if (email) {
     return (
@@ -61,7 +53,7 @@ const ForgotPassword = () => {
             . Please check your email inbox and follow the
             directions to reset your password.
           </p>
-          <Button onClick={() => router.push(path.signIn)}>
+          <Button onClick={() => router.push(routes.path.signIn)}>
             Back to Sign In
           </Button>
         </div>
@@ -91,7 +83,7 @@ const ForgotPassword = () => {
           />
           <Button
             htmlType="submit"
-            loading={loading}
+            loading={isForgotPasswordLoading}
             className={styles.button}
           >
             Send reset link

@@ -3,6 +3,7 @@ import useHandleError from './use-handle-error';
 import useOutsideClick from './use-outside-click';
 import useWindowDimensions from './use-window-dimensions';
 import { useFetch } from './use-fetch'; // remove
+import useToast from './use-toast';
 
 export {
   useDebounce,
@@ -10,4 +11,5 @@ export {
   useOutsideClick,
   useWindowDimensions,
   useFetch,
+  useToast,
 };

@@ -1,16 +1,12 @@
-import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 
-import { userSelectors } from 'resources/user/user.slice';
-
 import * as routes from 'routes';
-
 import 'resources/user/user.handlers';
+import { useCurrentUser } from 'resources/user/user.hooks';
 
 import MainLayout from './MainLayout';
 import UnauthorizedLayout from './UnauthorizedLayout';
-
 import PrivateScope from './PrivateScope';
 
 const layoutToComponent = {
@@ -27,19 +23,20 @@ const scopeToComponent = {
 
 const PageConfig = ({ children }) => {
   const router = useRouter();
+  const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUser();
 
-  const user = useSelector(userSelectors.selectUser);
+  if (isCurrentUserLoading) return null;
 
   const page = routes.configurations.find((r) => r.path === router.route);
   const Layout = layoutToComponent[page.layout];
   const Scope = scopeToComponent[page.scope];
 
-  if (page.scope === routes.scope.PRIVATE && !user) {
+  if (page.scope === routes.scope.PRIVATE && !currentUser) {
     router.push(routes.path.signIn);
     return null;
   }
 
-  if (page.scope === routes.scope.PUBLIC && user) {
+  if (page.scope === routes.scope.PUBLIC && currentUser) {
     router.push(routes.path.home);
     return null;
   }

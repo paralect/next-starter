@@ -37,7 +37,7 @@ const Link = ({
       return (
         <a
           href={href}
-          target={inNewTab && '_blank'}
+          target={inNewTab ? '_blank' : '_self'}
           rel="noreferrer"
           className={cn({
             [styles.disabled]: disabled,

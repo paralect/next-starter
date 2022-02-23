@@ -41,6 +41,7 @@
     "react-hook-form": "7.19.5",
     "react-modal": "3.14.4",
     "react-paginate": "8.0.1",
+    "react-query": "3.34.15",
     "react-redux": "7.2.6",
     "react-select": "5.2.1",
     "socket.io-client": "4.4.0",
