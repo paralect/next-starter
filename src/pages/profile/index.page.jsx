@@ -1,10 +1,11 @@
 import * as yup from 'yup';
+import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import Head from 'next/head';
 
-import { useHandleError } from 'hooks';
+import { handleError } from 'helpers';
 import { Input, Button } from 'components';
 import { userApi } from 'resources/user';
 
@@ -16,7 +17,6 @@ const schema = yup.object().shape({
 });
 
 const Profile = () => {
-  const handleError = useHandleError();
   const queryClient = useQueryClient();
 
   const { data: currentUser } = userApi.useGetCurrent();
@@ -32,7 +32,7 @@ const Profile = () => {
   const onSubmit = ({ password }) => updateCurrent({ password }, {
     onSuccess: (data) => {
       queryClient.setQueryData(['currentUser'], data);
-      // toastSuccess('Your password have been successfully updated.')
+      toast.success('Your password have been successfully updated.');
     },
     onError: (e) => handleError(e, setError),
   });

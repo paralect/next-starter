@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 
 import queryClient from 'query-client';
+import { Toaster } from 'components';
 
 import PageConfig from './PageConfig';
 
@@ -20,6 +21,7 @@ const App = ({ Component, pageProps }) => (
       </PageConfig>
       <ReactQueryDevtools position="bottom-right" />
     </QueryClientProvider>
+    <Toaster />
   </>
 );
 

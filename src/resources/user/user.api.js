@@ -17,7 +17,5 @@ export function useUpdateCurrent() {
 export const useList = (params) => {
   const list = () => apiService.get('/users', params);
 
-  return useQuery(['users', params], list, {
-    keepPreviousData: true,
-  });
+  return useQuery(['users', params], list);
 };

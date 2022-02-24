@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import Head from 'next/head';
 
 import * as routes from 'routes';
-import { useHandleError } from 'hooks';
+import { handleError } from 'helpers';
 import { Input, Button, Link, MemoCard } from 'components';
 import { accountApi } from 'resources/account';
 
@@ -19,7 +19,6 @@ const SignIn = () => {
   const {
     handleSubmit, formState: { errors }, setError, control,
   } = useForm({ resolver: yupResolver(schema) });
-  const handleError = useHandleError();
 
   const { mutate: signIn, isLoading: isSignInLoading } = accountApi.useSignIn();
 

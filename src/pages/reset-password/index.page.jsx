@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import Head from 'next/head';
 
 import * as routes from 'routes';
-import { useHandleError } from 'hooks';
+import { handleError } from 'helpers';
 import { Input, Button } from 'components';
 import { accountApi } from 'resources/account';
 
@@ -18,7 +18,6 @@ const schema = yup.object().shape({
 
 const ResetPassword = () => {
   const router = useRouter();
-  const handleError = useHandleError();
 
   const { token } = router.query;
   const [isSubmitted, setSubmitted] = useState(false);

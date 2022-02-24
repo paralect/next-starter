@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import * as routes from 'routes';
-import { useHandleError } from 'hooks';
+import { handleError } from 'helpers';
 import { Button } from 'components';
 import { accountApi } from 'resources/account';
 
@@ -11,7 +11,6 @@ import styles from './styles.module.css';
 
 const ForgotPassword = () => {
   const router = useRouter();
-  const handleError = useHandleError();
 
   const { email } = router.query;
 

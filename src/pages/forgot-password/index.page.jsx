@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 
 import * as routes from 'routes';
-import { useHandleError } from 'hooks';
+import { handleError } from 'helpers';
 import { Input, Button, Link } from 'components';
 import { accountApi } from 'resources/account';
 
@@ -18,7 +18,6 @@ const schema = yup.object().shape({
 
 const ForgotPassword = () => {
   const router = useRouter();
-  const handleError = useHandleError();
 
   const [email, setEmail] = useState(null);
 

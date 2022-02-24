@@ -18,6 +18,7 @@ import Spinner from './Spinner/Spinner';
 import TabBar from './TabBar/TabBar';
 import Table from './Table/Table';
 import TextArea from './TextArea';
+import Toaster from './Toaster/Toaster';
 import Toggle from './Toggle';
 
 export {
@@ -41,5 +42,6 @@ export {
   TabBar,
   Table,
   TextArea,
+  Toaster,
   Toggle,
 };

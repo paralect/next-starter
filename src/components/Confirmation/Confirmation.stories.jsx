@@ -24,7 +24,7 @@ export const Basic = () => {
     });
 
     if (isConfirmed) {
-      // toastSuccess('Deleted successfully');
+      console.log('Deleted successfully');
     }
   };
 
@@ -73,7 +73,7 @@ export const CustomBody = () => {
     });
 
     if (isConfirmed) {
-      // toastError('Sorry, but you cannot delete user with status "Legend"');
+      console.log('Sorry, but you cannot delete user with status "Legend"');
     }
   };
 
