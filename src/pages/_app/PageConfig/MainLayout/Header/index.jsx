@@ -1,5 +1,5 @@
 import * as routes from 'routes';
-import Link from 'components/Link';
+import { Link } from 'components';
 import { LogoImage } from 'public/images';
 
 import UserMenu from './components/UserMenu';

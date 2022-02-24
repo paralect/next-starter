@@ -7,10 +7,8 @@ import Head from 'next/head';
 
 import * as routes from 'routes';
 import { useHandleError } from 'hooks';
-import { useResetPassword } from 'resources/account/account.api';
-
-import Input from 'components/Input';
-import Button from 'components/Button';
+import { Input, Button } from 'components';
+import { accountApi } from 'resources/account';
 
 import styles from './styles.module.css';
 
@@ -31,7 +29,10 @@ const ResetPassword = () => {
     resolver: yupResolver(schema),
   });
 
-  const { mutate: resetPassword, isLoading: isResetPasswordLoading } = useResetPassword();
+  const {
+    mutate: resetPassword,
+    isLoading: isResetPasswordLoading,
+  } = accountApi.useResetPassword();
 
   const onSubmit = ({ password }) => resetPassword({ password, token }, {
     onSuccess: () => setSubmitted(true),

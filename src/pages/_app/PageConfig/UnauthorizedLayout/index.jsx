@@ -2,8 +2,7 @@ import PropTypes from 'prop-types';
 
 import * as routes from 'routes';
 import { LogoDarkImage } from 'public/images';
-
-import Link from 'components/Link';
+import { Link } from 'components';
 
 import styles from './styles.module.css';
 

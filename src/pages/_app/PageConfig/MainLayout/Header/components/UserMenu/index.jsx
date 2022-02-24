@@ -6,17 +6,17 @@ import { useRouter } from 'next/router';
 
 import * as routes from 'routes';
 import { useOutsideClick } from 'hooks';
-import Avatar from 'components/Avatar';
-import { useCurrentUser } from 'resources/user/user.hooks';
-import { useSignOut } from 'resources/account/account.api';
+import { Avatar } from 'components';
+import { userApi } from 'resources/user';
+import { accountApi } from 'resources/account';
 
 import styles from './styles.module.css';
 
 const UserMenu = () => {
   const router = useRouter();
 
-  const { data: user } = useCurrentUser();
-  const { mutate: signOut } = useSignOut();
+  const { data: user } = userApi.useGetCurrent();
+  const { mutate: signOut } = accountApi.useSignOut();
 
   const avatarRef = useRef();
 

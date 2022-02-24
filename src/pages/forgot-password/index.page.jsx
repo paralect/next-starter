@@ -1,17 +1,14 @@
+import * as yup from 'yup';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
-import * as yup from 'yup';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 import * as routes from 'routes';
 import { useHandleError } from 'hooks';
-import { useForgotPassword } from 'resources/account/account.api';
-
-import Input from 'components/Input';
-import Button from 'components/Button';
-import Link from 'components/Link';
+import { Input, Button, Link } from 'components';
+import { accountApi } from 'resources/account';
 
 import styles from './styles.module.css';
 
@@ -25,7 +22,10 @@ const ForgotPassword = () => {
 
   const [email, setEmail] = useState(null);
 
-  const { mutate: forgotPassword, isLoading: isForgotPasswordLoading } = useForgotPassword();
+  const {
+    mutate: forgotPassword,
+    isLoading: isForgotPasswordLoading,
+  } = accountApi.useForgotPassword();
 
   const {
     handleSubmit, formState: { errors }, control,

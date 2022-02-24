@@ -4,12 +4,9 @@ import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import Head from 'next/head';
 
 import * as routes from 'routes';
-import { useSignIn } from 'resources/account/account.api';
 import { useHandleError } from 'hooks';
-import Input from 'components/Input';
-import Button from 'components/Button';
-import Link from 'components/Link';
-import MemoCard from 'components/MemoCard';
+import { Input, Button, Link, MemoCard } from 'components';
+import { accountApi } from 'resources/account';
 
 import styles from './styles.module.css';
 
@@ -24,7 +21,7 @@ const SignIn = () => {
   } = useForm({ resolver: yupResolver(schema) });
   const handleError = useHandleError();
 
-  const { mutate: signIn, isLoading: isSignInLoading } = useSignIn();
+  const { mutate: signIn, isLoading: isSignInLoading } = accountApi.useSignIn();
 
   const onSubmit = (data) => signIn(data, {
     onError: (e) => handleError(e, setError),

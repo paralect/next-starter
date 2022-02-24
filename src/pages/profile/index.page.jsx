@@ -1,14 +1,13 @@
 import * as yup from 'yup';
-import { useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
+import { useQueryClient } from 'react-query';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import Head from 'next/head';
 
-import { useHandleError, useToast } from 'hooks';
-import { updateCurrent } from 'resources/user/user.api';
-import { useCurrentUser } from 'resources/user/user.hooks';
-import Input from 'components/Input';
-import Button from 'components/Button';
+import { useHandleError } from 'hooks';
+import { Input, Button } from 'components';
+import { userApi } from 'resources/user';
+
 import styles from './styles.module.css';
 
 const schema = yup.object().shape({
@@ -18,11 +17,9 @@ const schema = yup.object().shape({
 
 const Profile = () => {
   const handleError = useHandleError();
-  const { toastSuccess } = useToast();
+  const queryClient = useQueryClient();
 
-  const [loading, setLoading] = useState(false);
-
-  const { data: currentUser } = useCurrentUser();
+  const { data: currentUser } = userApi.useGetCurrent();
 
   const {
     handleSubmit, formState: { errors }, setError, control,
@@ -30,19 +27,15 @@ const Profile = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = useCallback(async ({ password }) => {
-    try {
-      setLoading(true);
+  const { mutate: updateCurrent, isLoading: isUpdateCurrentLoading } = userApi.useUpdateCurrent();
 
-      await updateCurrent({ password });
-
-      toastSuccess('Your password have been successfully updated.');
-    } catch (e) {
-      handleError(e, setError);
-    } finally {
-      setLoading(false);
-    }
-  }, [toastSuccess, handleError, setError]);
+  const onSubmit = ({ password }) => updateCurrent({ password }, {
+    onSuccess: (data) => {
+      queryClient.setQueryData(['currentUser'], data);
+      // toastSuccess('Your password have been successfully updated.')
+    },
+    onError: (e) => handleError(e, setError),
+  });
 
   return (
     <>
@@ -74,7 +67,7 @@ const Profile = () => {
             />
             <Button
               htmlType="submit"
-              loading={loading}
+              loading={isUpdateCurrentLoading}
             >
               Update Profile
             </Button>

@@ -2,12 +2,15 @@ import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 
 import * as routes from 'routes';
-import 'resources/user/user.handlers';
-import { useCurrentUser } from 'resources/user/user.hooks';
+import { userApi } from 'resources/user';
 
 import MainLayout from './MainLayout';
 import UnauthorizedLayout from './UnauthorizedLayout';
 import PrivateScope from './PrivateScope';
+
+import 'resources/user/user.handlers';
+
+const configurations = Object.values(routes.configuration);
 
 const layoutToComponent = {
   [routes.layout.MAIN]: MainLayout,
@@ -23,11 +26,11 @@ const scopeToComponent = {
 
 const PageConfig = ({ children }) => {
   const router = useRouter();
-  const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUser();
+  const { data: currentUser, isLoading: isCurrentUserLoading } = userApi.useGetCurrent();
 
   if (isCurrentUserLoading) return null;
 
-  const page = routes.configurations.find((r) => r.path === router.route);
+  const page = configurations.find((r) => r.path === router.route);
   const Layout = layoutToComponent[page.layout];
   const Scope = scopeToComponent[page.scope];
 

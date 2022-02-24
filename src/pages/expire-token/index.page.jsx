@@ -4,9 +4,8 @@ import { useRouter } from 'next/router';
 
 import * as routes from 'routes';
 import { useHandleError } from 'hooks';
-import { useResendEmail } from 'resources/account/account.api';
-
-import Button from 'components/Button';
+import { Button } from 'components';
+import { accountApi } from 'resources/account';
 
 import styles from './styles.module.css';
 
@@ -18,7 +17,7 @@ const ForgotPassword = () => {
 
   const [isSent, setSent] = useState(false);
 
-  const { mutate: resendEmail, isLoading: isResendEmailLoading } = useResendEmail();
+  const { mutate: resendEmail, isLoading: isResendEmailLoading } = accountApi.useResendEmail();
 
   const onSubmit = () => resendEmail({ email }, {
     onSuccess: () => setSent(true),

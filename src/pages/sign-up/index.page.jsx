@@ -7,11 +7,8 @@ import Head from 'next/head';
 import config from 'config';
 import * as routes from 'routes';
 import { useHandleError } from 'hooks';
-import { useSignUp } from 'resources/account/account.api';
-
-import Input from 'components/Input';
-import Button from 'components/Button';
-import Link from 'components/Link';
+import { Input, Button, Link } from 'components';
+import { accountApi } from 'resources/account';
 
 import styles from './styles.module.css';
 
@@ -38,7 +35,7 @@ const SignUp = () => {
     resolver: yupResolver(schema),
   });
 
-  const { mutate: signUp, isLoading: isSignUpLoading } = useSignUp();
+  const { mutate: signUp, isLoading: isSignUpLoading } = accountApi.useSignUp();
 
   const onSubmit = (data) => signUp(data, {
     onSuccess: (response) => {
