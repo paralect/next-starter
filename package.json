@@ -16,9 +16,9 @@
     "build": "next build",
     "dev": "next dev -p 3002",
     "start": "next start -p 3002",
-    "precommit": "lint-staged && next lint",
     "storybook": "start-storybook -p 6007",
     "build-storybook": "build-storybook",
+    "precommit": "lint-staged && next lint",
     "prepare": "husky install"
   },
   "dependencies": {
