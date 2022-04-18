@@ -1,3 +1,5 @@
+# This repository is no longer maintained. Check [Ship](https://github.com/paralect/ship).
+
 # Next Starter
 
 Next starter is what we think an ideal starting point for the most React.JS frontend applications. It is based on the following primary technologies:
